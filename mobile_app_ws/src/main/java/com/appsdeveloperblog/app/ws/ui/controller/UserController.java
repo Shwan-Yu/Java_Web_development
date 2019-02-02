@@ -16,7 +16,7 @@ import com.appsdeveloperblog.app.ws.ui.model.request.UserDetailsRequestModel;
 import com.appsdeveloperblog.app.ws.ui.model.response.UserRest;
 
 @RestController
-@RequestMapping("users") //http://localhost:8080/users
+@RequestMapping("users") // http://localhost:8080/users
 public class UserController {
 	
 	@Autowired
@@ -33,7 +33,7 @@ public class UserController {
 //		give userDto the value from the request
 		UserDto userDto = new UserDto();
 		BeanUtils.copyProperties(userDetails, userDto);
-//		create a new Dto object in service layer
+//		create a new DTO object in service layer and record it into DB, and get DTO response out.
 		UserDto createdUser = userService.createUser(userDto);
 		BeanUtils.copyProperties(createdUser, returnValue);
 		return returnValue;
