@@ -1,2 +1,2 @@
-# Java_Backend_WebDev
-Java Backend Web Development Project
+# Java RESTful Web Services
+Java RESTful Web Services Project
