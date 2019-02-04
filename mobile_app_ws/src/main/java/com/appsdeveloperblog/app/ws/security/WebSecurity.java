@@ -20,6 +20,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 
+//	leave POST request public, add filter out that without right token. 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
@@ -29,12 +30,22 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL)
 		.permitAll()
 		.anyRequest()
-		.authenticated().and().addFilter(new AuthenticationFilter(authenticationManager()));	
+		.authenticated()
+		.and()
+		.addFilter(getAuthenticationFilter());	
 	}
 
+//	configuer the manager with userDetailsService to use and encryption method
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+	}
+	
+//	change the login url
+	public AuthenticationFilter getAuthenticationFilter() throws Exception{
+		final AuthenticationFilter filter = new AuthenticationFilter(authenticationManager());
+		filter.setFilterProcessesUrl("/users/login");
+		return filter;
 	}
 
 }
